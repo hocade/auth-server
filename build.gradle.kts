@@ -20,6 +20,12 @@ repositories {
     mavenCentral()
 }
 
+allOpen {
+    annotation("javax.persistence.Entity")
+    annotation("javax.persistence.MappedSuperclass")
+    annotation("javax.persistence.Embeddable")
+}
+
 val queryDslVersion = "5.0.0:jakarta"
 val mapstructVersion = "1.5.5.Final"
 
