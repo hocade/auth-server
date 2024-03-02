@@ -69,7 +69,7 @@ class SecurityConfig(
         val registeredClient = RegisteredClient.withId(UUID.randomUUID().toString())
             .clientId(authorizationProperties.clientId)
             .clientSecret(authorizationProperties.clientSecret)
-            .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC) // Basic Auth로 Client 확인
+            .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
             .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
             .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
             .authorizationGrantType(AuthorizationGrantType.CLIENT_CREDENTIALS)

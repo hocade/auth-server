@@ -1,9 +1,10 @@
 package com.board.authserver.user.application
 
+import com.board.authserver.common.exception.CommonException
+import com.board.authserver.common.exception.enum.CommonExceptionCode
 import com.board.authserver.user.domain.CustomUserDetails
 import com.board.authserver.user.persistence.UserRepository
 import jakarta.transaction.Transactional
-import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.stereotype.Service
@@ -19,10 +20,8 @@ class CustomUserDetailService(
 
     @Transactional
     override fun loadUserByUsername(username: String?): UserDetails {
-        username?.let {
-            val user = userRepository.findByNickName(it)
-            return CustomUserDetails(user)
-        }
-        throw NotFoundException()
+        // todo : Filter 단에서 먼저 예외처리가 되어 @RestControllerAdvice 적용이 안됨
+        val user = username?.let { userRepository.findByNickName(it) } ?: throw CommonException(CommonExceptionCode.USER_NOT_FOUND)
+        return CustomUserDetails(user)
     }
 }
