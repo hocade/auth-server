@@ -17,7 +17,7 @@ class User(
     val nickName: String,
 
     @Column(name = "PASSWORD")
-    val password: String,
+    var password: String,
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = [CascadeType.ALL], orphanRemoval = true)
     val roles: List<UserRole>
