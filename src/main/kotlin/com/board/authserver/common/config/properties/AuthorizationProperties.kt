@@ -1,4 +1,4 @@
-package com.board.authserver.config.properties
+package com.board.authserver.common.config.properties
 
 import org.springframework.boot.context.properties.ConfigurationProperties
 

@@ -1,6 +1,6 @@
-package com.board.authserver.config
+package com.board.authserver.common.config
 
-import com.board.authserver.config.properties.AuthorizationProperties
+import com.board.authserver.common.config.properties.AuthorizationProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.core.Ordered
@@ -17,8 +17,10 @@ import org.springframework.security.oauth2.server.authorization.client.Registere
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configurers.OAuth2AuthorizationServerConfigurer
+import org.springframework.security.oauth2.server.authorization.settings.TokenSettings
 import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint
+import java.time.Duration
 import java.util.*
 
 
@@ -73,6 +75,7 @@ class SecurityConfig(
             .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
             .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
             .authorizationGrantType(AuthorizationGrantType.CLIENT_CREDENTIALS)
+            .tokenSettings(TokenSettings.builder().accessTokenTimeToLive(Duration.ofHours(3)).build())
             .redirectUri(authorizationProperties.redirectUri)
 //            .scope(OidcScopes.OPENID)
 //            .scope(OidcScopes.PROFILE)

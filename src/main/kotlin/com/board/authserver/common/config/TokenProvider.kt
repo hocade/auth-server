@@ -1,6 +1,6 @@
-package com.board.authserver.config
+package com.board.authserver.common.config
 
-import com.board.authserver.config.properties.JwtProperties
+import com.board.authserver.common.config.properties.JwtProperties
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import org.springframework.stereotype.Service

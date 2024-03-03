@@ -1,4 +1,4 @@
-package com.board.authserver.config
+package com.board.authserver.common.config
 
 import jakarta.transaction.Transactional
 import org.springframework.security.authentication.AuthenticationProvider
