@@ -1,6 +1,5 @@
 package com.board.authserver.common.config
 
-import com.board.authserver.common.config.properties.AuthorizationProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.core.Ordered
@@ -10,17 +9,11 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configurers.ExceptionHandlingConfigurer
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
-import org.springframework.security.oauth2.core.AuthorizationGrantType
-import org.springframework.security.oauth2.core.ClientAuthenticationMethod
-import org.springframework.security.oauth2.server.authorization.client.InMemoryRegisteredClientRepository
-import org.springframework.security.oauth2.server.authorization.client.RegisteredClient
-import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configurers.OAuth2AuthorizationServerConfigurer
-import org.springframework.security.oauth2.server.authorization.settings.TokenSettings
+import org.springframework.security.oauth2.server.authorization.settings.AuthorizationServerSettings
 import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint
-import java.time.Duration
 import java.util.*
 
 
@@ -30,9 +23,7 @@ import java.util.*
  */
 @Configuration
 @EnableWebSecurity
-class SecurityConfig(
-    private val authorizationProperties: AuthorizationProperties
-) {
+class SecurityConfig {
     private val allowedUrls = arrayOf("/", "/swagger-ui/**", "/v3/**", "/login", "/callback", "/oauth2/**")
 
     @Bean
@@ -42,6 +33,7 @@ class SecurityConfig(
         OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(http)
 
         http.getConfigurer(OAuth2AuthorizationServerConfigurer::class.java)
+//            .oidc { it.clientRegistrationEndpoint(Customizer.withDefaults()) }
 
         http
             .exceptionHandling { exceptions: ExceptionHandlingConfigurer<HttpSecurity> ->
@@ -50,6 +42,13 @@ class SecurityConfig(
                 )
             }
         return http.build()
+    }
+
+    @Bean
+    fun authorizationServerSettings(): AuthorizationServerSettings? {
+        return AuthorizationServerSettings.builder()
+            .oidcClientRegistrationEndpoint("/oauth2/client")
+            .build()
     }
 
     @Bean
@@ -66,23 +65,6 @@ class SecurityConfig(
         return http.build()
     }
 
-    @Bean
-    fun registeredClientRepository(): RegisteredClientRepository? {
-        val registeredClient = RegisteredClient.withId(UUID.randomUUID().toString())
-            .clientId(authorizationProperties.clientId)
-            .clientSecret(authorizationProperties.clientSecret)
-            .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
-            .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
-            .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
-            .authorizationGrantType(AuthorizationGrantType.CLIENT_CREDENTIALS)
-            .tokenSettings(TokenSettings.builder().accessTokenTimeToLive(Duration.ofHours(3)).build())
-            .redirectUri(authorizationProperties.redirectUri)
-//            .scope(OidcScopes.OPENID)
-//            .scope(OidcScopes.PROFILE)
-//            .clientSettings(ClientSettings.builder().requireAuthorizationConsent(true).build())
-            .build()
-        return InMemoryRegisteredClientRepository(registeredClient)
-    }
 
     @Bean
     fun passwordEncoder() = BCryptPasswordEncoder()

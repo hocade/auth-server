@@ -11,5 +11,6 @@ enum class CommonExceptionCode(
     val code: Int,
     val message: String
 ) {
-    USER_NOT_FOUND(HttpStatus.BAD_REQUEST, 1000, "not found user")
+    USER_NOT_FOUND(HttpStatus.BAD_REQUEST, 1000, "not found user"),
+    CLIENT_NOT_FOUND(HttpStatus.BAD_REQUEST, 1001, "not found client")
 }
