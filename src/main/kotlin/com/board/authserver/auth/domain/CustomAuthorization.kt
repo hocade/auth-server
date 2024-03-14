@@ -15,51 +15,50 @@ import java.time.Instant
 @Table(name = "OAUTH2_AUTHORIZATION")
 class CustomAuthorization(
     @Id
-    val id: String,
+    var id: String,
 
     @Column(name = "principal_name")
-    val principalName: String,
+    var principalName: String,
 
     @Column(name = "attributes")
-    val attributes: String?,
+    var attributes: String?,
 
     @Column(name = "registered_client_id")
-    val registeredClientId: String,
+    var registeredClientId: String,
 
     @Column(name = "authorization_grant_type")
-    val authorizationGrantType: String,
+    var authorizationGrantType: String,
 
     @Column(name = "state")
-    val state: String?,
+    var state: String?,
 
     @Column(name = "authorization_code_value")
-    val authorizationCodeValue: String?,
+    var authorizationCodeValue: String?,
 
     @Column(name = "authorization_code_issued_at")
-    val authorizationCodeIssuedAt: Instant?,
+    var authorizationCodeIssuedAt: Instant?,
 
     @Column(name = "authorization_code_expires_at")
-    val authorizationCodeExpiresAt: Instant?,
+    var authorizationCodeExpiresAt: Instant?,
 
     @Column(name = "access_token_value")
-    val accessTokenValue: String?,
+    var accessTokenValue: String?,
 
     @Column(name = "access_token_issued_at")
-    val accessTokenIssuedAt: Instant?,
+    var accessTokenIssuedAt: Instant?,
 
     @Column(name = "access_token_expires_at")
-    val accessTokenExpiresAt: Instant?,
+    var accessTokenExpiresAt: Instant?,
 
     @Column(name = "access_token_scopes")
-    val accessTokenScopes: String?,
+    var accessTokenScopes: String?,
 
     @Column(name = "refresh_token_value")
-    val refreshTokenValue: String?,
+    var refreshTokenValue: String?,
 
     @Column(name = "refresh_token_issued_at")
-    val refreshTokenIssuedAt: Instant?,
+    var refreshTokenIssuedAt: Instant?,
 
     @Column(name = "refresh_token_expires_at")
-    val refreshTokenExpiresAt: Instant?
-) {
-}
+    var refreshTokenExpiresAt: Instant?
+)

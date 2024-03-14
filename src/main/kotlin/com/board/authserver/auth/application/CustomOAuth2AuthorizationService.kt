@@ -2,6 +2,7 @@ package com.board.authserver.auth.application
 
 import com.board.authserver.auth.application.dto.AuthenticationDto
 import com.board.authserver.auth.application.dto.OAuth2AuthorizationRequestDto
+import com.board.authserver.auth.application.mapper.CustomAuthorizationMapper
 import com.board.authserver.auth.domain.CustomAuthorization
 import com.board.authserver.auth.persistence.CustomAuthorizationRepository
 import com.board.authserver.auth.persistence.CustomRegisteredClientRepository
@@ -133,12 +134,7 @@ class CustomOAuth2AuthorizationService(
             OAuth2RefreshToken::class.java
         )
 
-        val entity = CustomAuthorization(
-            authorization.id, authorization.principalName, writeMap(authorization.attributes), authorization.registeredClientId, authorization.authorizationGrantType.value, authorization.getAttribute(OAuth2ParameterNames.STATE),
-            authorizationCode?.token?.tokenValue, authorizationCode?.token?.issuedAt , authorizationCode?.token?.expiresAt, accessToken?.token?.tokenValue, accessToken?.token?.issuedAt, accessToken?.token?.expiresAt, StringUtils.collectionToDelimitedString(accessToken?.token?.scopes, ","),  refreshToken?.token?.tokenValue, refreshToken?.token?.issuedAt, refreshToken?.token?.expiresAt
-            )
-
-        return entity
+        return CustomAuthorizationMapper.instance.toEntity(authorization, authorizationCode, accessToken, refreshToken, writeMap(authorization.attributes))
     }
 
     private fun setAttributes(entity: CustomAuthorization, attributes: MutableMap<String, Any>) {
