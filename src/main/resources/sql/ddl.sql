@@ -56,6 +56,7 @@ CREATE TABLE OAUTH2_REGISTERED_CLIENT (
 create table USER
 (
     ID        bigint(11) auto_increment,
+    EMAIL varchar(50) not null,
     NICK_NAME varchar(50) not null,
     PASSWORD  varchar(50) not null,
     constraint USER_pk

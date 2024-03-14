@@ -24,7 +24,7 @@ class CustomUserDetails(
     }
 
     override fun getUsername(): String {
-        return user.nickName
+        return user.email
     }
 
     fun getUser(): User {

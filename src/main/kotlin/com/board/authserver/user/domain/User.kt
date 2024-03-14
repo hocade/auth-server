@@ -13,6 +13,9 @@ class User(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null,
 
+    @Column(name = "EMAIL")
+    val email: String,
+
     @Column(name = "NICK_NAME")
     val nickName: String,
 

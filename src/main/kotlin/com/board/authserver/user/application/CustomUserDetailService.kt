@@ -21,7 +21,7 @@ class CustomUserDetailService(
     @Transactional
     override fun loadUserByUsername(username: String?): UserDetails {
         // todo : Filter 단에서 먼저 예외처리가 되어 @RestControllerAdvice 적용이 안됨
-        val user = username?.let { userRepository.findByNickName(it) } ?: throw CommonException(CommonExceptionCode.USER_NOT_FOUND)
+        val user = username?.let { userRepository.findByEmail(it) } ?: throw CommonException(CommonExceptionCode.USER_NOT_FOUND)
         return CustomUserDetails(user)
     }
 }
